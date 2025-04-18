@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly 20 RP Giveaway</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      font-weight: bold;
+      font-size: 2rem;
+      margin-top: 20px;
+    }
+    .subtext {
+      font-family: 'Courier New', Courier, monospace;
+      color: white;
+      margin-top: 10px;
+    }
+    .arrow {
+      font-size: 2rem;
+      animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+    video {
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      display: block;
+      border: 2px solid white;
+      border-radius: 10px;
+    }
+    .step {
+      margin: 30px 0 10px;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    #downloadNow, #submitBtn {
+      background-color: yellow;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px 5px;
+      cursor: pointer;
+    }
+    #popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #0f0;
+      padding: 20px;
+      border-radius: 10px;
+      color: #000;
+      z-index: 1000;
+    }
+    #popup button {
+      background-color: white;
+      color: black;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    #popup button.hidden {
+      display: none;
+    }
+    input {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      width: 70%;
+      max-width: 300px;
+    }
+    #warningText, #invalidText {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+    #submittedIDs {
+      margin-top: 40px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .id-entry {
+      margin: 5px 0;
+      color: white;
+      font-size: 0.95rem;
+    }
+    #submittedTitle {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weekly 20 RP Giveaway</h1>
+  <div class="subtext">* Full explain watch this video *</div>
+  <div class="arrow">⬇</div>
+
+  <video controls>
+    <source src="lv_0_20250418215043.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="step">STEP 1: Download this app (required)</div>
+  <button id="downloadNow">Download Now</button>
+
+  <div class="step">STEP 2: Submit your BGMI / PUBG ID</div>
+  <input type="text" id="userID" placeholder="Enter your BGMI / PUBG ID" />
+  <button id="submitBtn">Submit</button>
+  <div id="warningText">Please watch full video</div>
+  <div id="invalidText">Please submit valid ID</div>
+
+  <div id="popup">
+    <div id="popupMessage">Loading...</div>
+    <button id="popupBtn" class="hidden" onclick="closePopup()">Okay</button>
+  </div>
+
+  <div id="submittedTitle">Already Submitted</div>
+  <div id="submittedIDs"></div>
+
+  <script>
+    let downloadClicked = false;
+    const submittedIDsContainer = document.getElementById('submittedIDs');
+    const fakeIDs = Array.from({length: 150}, (_, i) => 55527269074 + i);
+
+    fakeIDs.forEach(id => {
+      const div = document.createElement('div');
+      div.className = 'id-entry';
+      div.innerText = id;
+      submittedIDsContainer.appendChild(div);
+    });
+
+    document.getElementById('downloadNow').addEventListener('click', function() {
+      downloadClicked = true;
+      setTimeout(() => {
+        document.getElementById('downloadNow').style.backgroundColor = 'green';
+      }, 4000);
+      window.open('https://shashankk.xyz/c?o=1&a=147', '_blank');
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', function() {
+      const userID = document.getElementById('userID').value.trim();
+      document.getElementById('warningText').style.display = 'none';
+      document.getElementById('invalidText').style.display = 'none';
+
+      if (!downloadClicked) {
+        document.getElementById('warningText').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('popup').style.display = 'block';
+      document.getElementById('popupMessage').innerText = 'Loading...';
+      document.getElementById('popupBtn').classList.add('hidden');
+
+      setTimeout(() => {
+        const isNumeric = /^\d+$/.test(userID);
+        if (!isNumeric) {
+          document.getElementById('popup').style.display = 'none';
+          document.getElementById('invalidText').style.display = 'block';
+        } else {
+          document.getElementById('popupMessage').innerText = 'Submit Successful';
+          document.getElementById('popupBtn').classList.remove('hidden');
+
+          const newID = document.createElement('div');
+          newID.className = 'id-entry';
+          newID.innerText = userID;
+          submittedIDsContainer.insertBefore(newID, submittedIDsContainer.firstChild);
+        }
+      }, 4000);
+    });
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('submitBtn').style.backgroundColor = 'green';
+    }
+  </script>
+</body>
+</html>
